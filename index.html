@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="DAYORA — ruang kerja produktivitas pribadi.">
+  <title>DAYORA — Productivity Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/app.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <div id="toast" class="toast" role="status"></div>
+
+  <section id="landingView" class="landing-view">
+    <header class="landing-nav">
+      <a class="brand" href="#"><span class="brand-mark">◈</span> DAYORA</a>
+      <div class="landing-nav-actions">
+        <button class="btn btn-ghost" data-open-auth="login">Masuk</button>
+        <button class="btn btn-primary" data-open-auth="register">Mulai Gratis</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero wrap">
+        <div class="hero-copy">
+          <span class="eyebrow"><span class="pulse"></span> YOUR PRODUCTIVITY SPACE</span>
+          <h1>Atur harimu.<br><span>Capai tujuanmu.</span></h1>
+          <p class="hero-lead">Semua yang kamu butuhkan untuk mengelola tugas, jadwal, catatan, dan target dalam satu ruang kerja yang sederhana.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-large" data-open-auth="register">Buat akun gratis <span>→</span></button>
+            <button class="btn btn-outline btn-large" data-scroll="#features">Jelajahi fitur</button>
+          </div>
+          <div class="hero-caption">Gratis digunakan · Fokus di HP · Sinkronisasi dengan akun</div>
+        </div>
+        <div class="hero-preview">
+          <div class="preview-top"><span class="brand"><span class="brand-mark">◈</span> DAYORA</span><span class="live-dot">● Workspace</span></div>
+          <div class="preview-content">
+            <span class="muted tiny">RINGKASAN HARI INI</span>
+            <h2>Selamat datang kembali.</h2>
+            <div class="preview-stats">
+              <div><span class="muted tiny">Total tugas</span><strong>12</strong></div>
+              <div><span class="muted tiny">Selesai</span><strong class="mint">08</strong></div>
+            </div>
+            <div class="progress-head"><span>Progres harian</span><b>67%</b></div>
+            <div class="progress"><i style="width:67%"></i></div>
+            <div class="preview-task"><span class="task-check">✓</span> Selesaikan tugas prioritas</div>
+            <div class="preview-task"><span class="task-empty"></span> Periksa jadwal mingguan</div>
+            <div class="preview-task"><span class="task-empty"></span> Catat ide proyek baru</div>
+          </div>
+          <div class="preview-glow"></div>
+        </div>
+      </section>
+
+      <section id="features" class="feature-section wrap">
+        <div class="section-title">
+          <span class="eyebrow">TOOLS FOR YOUR DAY</span>
+          <h2>Satu tempat untuk semuanya.</h2>
+          <p>Kelola aktivitas tanpa harus berpindah-pindah aplikasi.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card"><span class="feature-icon">✓</span><h3>My Tasks</h3><p>Atur tugas, prioritas, status, dan tenggat waktu.</p></article>
+          <article class="feature-card"><span class="feature-icon">▦</span><h3>Calendar</h3><p>Susun agenda dan lihat aktivitas berdasarkan tanggal.</p></article>
+          <article class="feature-card"><span class="feature-icon">✎</span><h3>My Notes</h3><p>Simpan catatan, ide, dan informasi penting.</p></article>
+          <article class="feature-card"><span class="feature-icon">◎</span><h3>Goals</h3><p>Pantau target dan perkembangan langkah demi langkah.</p></article>
+          <article class="feature-card"><span class="feature-icon">◷</span><h3>Focus Room</h3><p>Gunakan timer fokus dan simpan sesi produktivitas.</p></article>
+          <article class="feature-card"><span class="feature-icon">↗</span><h3>Analytics</h3><p>Lihat ringkasan tugas dan waktu fokusmu.</p></article>
+        </div>
+      </section>
+      <section class="cta wrap">
+        <span class="eyebrow">MAKE EVERY DAY COUNT</span>
+        <h2>Mulai dari satu langkah kecil.</h2>
+        <p>Buat ruang kerjamu sendiri bersama DAYORA.</p>
+        <button class="btn btn-primary btn-large" data-open-auth="register">Mulai sekarang →</button>
+      </section>
+    </main>
+    <footer class="landing-footer"><span class="brand"><span class="brand-mark">◈</span> DAYORA</span><span>© 2026 DAYORA · Make Every Day Count.</span></footer>
+  </section>
+
+  <section id="authView" class="auth-view hidden">
+    <button class="back-link" id="backLanding">← Kembali ke beranda</button>
+    <div class="auth-card">
+      <a class="brand auth-brand" href="#"><span class="brand-mark">◈</span> DAYORA</a>
+      <div id="authHeading">
+        <span class="eyebrow">YOUR PRODUCTIVITY SPACE</span>
+        <h1 id="authTitle">Selamat datang</h1>
+        <p id="authSubtitle" class="muted">Masuk untuk membuka workspace-mu.</p>
+      </div>
+      <form id="authForm">
+        <label id="nameField" class="field hidden">Nama lengkap<input id="authName" type="text" autocomplete="name" placeholder="Nama kamu"></label>
+        <label class="field">Email<input id="authEmail" type="email" required autocomplete="email" placeholder="nama@email.com"></label>
+        <label class="field">Password<input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="Minimal 6 karakter"></label>
+        <button id="authSubmit" class="btn btn-primary btn-full" type="submit">Masuk</button>
+      </form>
+      <p class="auth-switch" id="authSwitch">Belum punya akun? <button data-open-auth="register">Daftar gratis</button></p>
+      <p class="tiny muted auth-note" id="authModeNote"></p>
+    </div>
+  </section>
+
+  <section id="appView" class="app-view hidden">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand side-brand" href="#"><span class="brand-mark">◈</span> DAYORA</a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="side-nav">
+        <button class="nav-item active" data-page="dashboard"><span>⌂</span> Dashboard</button>
+        <button class="nav-item" data-page="tasks"><span>✓</span> My Tasks</button>
+        <button class="nav-item" data-page="calendar"><span>▦</span> Calendar</button>
+        <button class="nav-item" data-page="notes"><span>✎</span> My Notes</button>
+        <button class="nav-item" data-page="goals"><span>◎</span> Goals</button>
+      </nav>
+      <div class="side-label">PRODUCTIVITY</div>
+      <nav class="side-nav">
+        <button class="nav-item" data-page="focus"><span>◷</span> Focus Room</button>
+        <button class="nav-item" data-page="analytics"><span>↗</span> Analytics</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="nav-item" data-page="settings"><span>⚙</span> Settings</button>
+        <div class="user-mini"><div class="avatar" id="sideAvatar">U</div><div class="user-mini-info"><b id="sideName">Pengguna</b><small id="sideEmail">Akun DAYORA</small></div><button id="logoutBtn" class="icon-btn" title="Keluar">↪</button></div>
+      </div>
+    </aside>
+
+    <div class="main-shell">
+      <header class="topbar">
+        <button id="mobileMenu" class="icon-btn mobile-menu" aria-label="Buka menu">☰</button>
+        <div class="breadcrumb"><span>Workspace</span><b>/</b><strong id="pageCrumb">Dashboard</strong></div>
+        <div class="topbar-actions"><span class="today-label" id="todayLabel"></span><button class="icon-btn" id="themeToggle" title="Ganti tema">☼</button><div class="avatar top-avatar" id="topAvatar">U</div></div>
+      </header>
+      <main id="pageContent" class="page-content"></main>
+      <nav class="mobile-nav">
+        <button class="mobile-nav-item active" data-page="dashboard"><span>⌂</span><small>Home</small></button>
+        <button class="mobile-nav-item" data-page="tasks"><span>✓</span><small>Tasks</small></button>
+        <button class="mobile-nav-item" data-page="calendar"><span>▦</span><small>Calendar</small></button>
+        <button class="mobile-nav-item" data-page="notes"><span>✎</span><small>Notes</small></button>
+        <button class="mobile-nav-item" data-page="settings"><span>⚙</span><small>More</small></button>
+      </nav>
+    </div>
+  </section>
+
+  <dialog id="itemDialog" class="item-dialog">
+    <form method="dialog" class="dialog-head"><h3 id="dialogTitle">Tambah item</h3><button class="icon-btn" value="cancel" aria-label="Tutup">×</button></form>
+    <form id="itemForm" class="dialog-form">
+      <input type="hidden" id="itemId">
+      <input type="hidden" id="itemType">
+      <label class="field">Judul<input id="itemTitle" required maxlength="120" placeholder="Tulis judul..."></label>
+      <label class="field" id="descriptionWrap">Deskripsi<textarea id="itemDescription" rows="3" placeholder="Tambahkan detail (opsional)"></textarea></label>
+      <label class="field" id="priorityWrap">Prioritas<select id="itemPriority"><option value="low">Rendah</option><option value="medium" selected>Sedang</option><option value="high">Tinggi</option></select></label>
+      <label class="field" id="dateWrap">Tanggal<input id="itemDate" type="date"></label>
+      <label class="field hidden" id="goalProgressWrap">Progres (%)<input id="goalProgress" type="number" min="0" max="100" value="0"></label>
+      <button class="btn btn-primary btn-full" type="submit">Simpan</button>
+    </form>
+  </dialog>
+</body>
+</html>
