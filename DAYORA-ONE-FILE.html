@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="DAYORA — ruang kerja produktivitas pribadi.">
+  <title>DAYORA — Productivity Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+:root{--bg:#0b1020;--surface:#141d32;--surface2:#1b2740;--surface3:#24324e;--text:#f4f6ff;--muted:#9aa7c0;--primary:#7565f5;--primary2:#9588ff;--border:rgba(255,255,255,.09);--mint:#69dcb9;--danger:#ff7487;--shadow:0 18px 55px rgba(0,0,0,.22)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+.hidden{display:none!important}
+.muted{color:var(--muted)}
+.tiny{font-size:10px}
+.btn{border:0;border-radius:10px;padding:11px 16px;font-size:13px;font-weight:700;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:9px}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary2);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--text)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-large{padding:14px 19px}
+.btn-full{width:100%}
+.icon-btn{border:1px solid var(--border);background:var(--surface);color:var(--text);width:36px;height:36px;border-radius:10px;display:grid;place-items:center}
+.field{display:grid;gap:7px;color:var(--muted);font-size:12px;font-weight:600}
+.field input,.field textarea,.field select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;color:var(--text);outline:none;font-size:13px}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--primary)}
+.field textarea{resize:vertical}
+.toast{position:fixed;z-index:1000;left:50%;bottom:25px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#26334e;color:white;border:1px solid var(--border);padding:12px 17px;border-radius:12px;font-size:12px;box-shadow:var(--shadow);transition:.25s;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#7565f5,#39c6d8);display:grid;place-items:center;font-weight:800;color:#fff;font-size:13px}
+body.light{--bg:#f3f5fb;--surface:#fff;--surface2:#f1f3fa;--surface3:#e8ebf5;--text:#182139;--muted:#68748d;--border:rgba(22,35,65,.12);--shadow:0 18px 55px rgba(25,40,75,.10)}
+
+
+/* Landing */
+.landing-view{min-height:100vh;background:radial-gradient(ellipse at 75% 20%,rgba(117,101,245,.13),transparent 36%),var(--bg)}
+.landing-nav{height:72px;padding:0 6%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.brand{font-size:20px;font-weight:800;letter-spacing:1px;display:inline-flex;align-items:center;gap:9px}
+.brand-mark{font-size:27px;color:var(--primary2)}
+.landing-nav-actions{display:flex;gap:8px}
+.wrap{width:min(1120px,88%);margin:auto}
+.hero{min-height:570px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:55px;padding-top:65px;padding-bottom:70px}
+.eyebrow{font-size:10px;letter-spacing:2px;font-weight:800;color:var(--primary2)}
+.pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--mint);margin-right:7px;box-shadow:0 0 12px var(--mint)}
+.hero h1{font-size:clamp(42px,6vw,68px);line-height:1.08;letter-spacing:-2.7px;margin:20px 0}
+.hero h1 span{color:var(--primary2)}
+.hero-lead{max-width:480px;color:var(--muted);font-size:14px;line-height:1.8}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:27px}
+.hero-caption{font-size:10px;color:var(--muted);margin-top:18px}
+.hero-preview{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.preview-top{height:55px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px}
+.preview-top .brand{font-size:14px}.preview-top .brand-mark{font-size:20px}
+.live-dot{font-size:10px;color:var(--mint)}
+.preview-content{padding:24px;position:relative;z-index:1}
+.preview-content h2{font-size:23px;margin:6px 0 20px}
+.preview-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.preview-stats>div{background:var(--surface2);border-radius:12px;padding:14px;display:grid;gap:5px}
+.preview-stats strong{font-size:27px}.mint{color:var(--mint)}
+.progress-head{display:flex;justify-content:space-between;font-size:11px;margin:22px 0 8px}
+.progress{height:7px;border-radius:9px;background:var(--surface3);overflow:hidden}.progress i{display:block;height:100%;background:var(--primary2);border-radius:9px}
+.preview-task{background:var(--surface2);padding:11px;border-radius:9px;margin-top:9px;font-size:11px;color:var(--muted)}
+.task-check{color:var(--mint);margin-right:8px}.task-empty{display:inline-block;width:11px;height:11px;border:1px solid var(--muted);border-radius:50%;margin:0 8px 0 1px}
+.feature-section{padding:55px 0 85px}
+.section-title{text-align:center;margin-bottom:34px}.section-title h2,.cta h2{font-size:30px;margin:10px 0}.section-title p,.cta p{color:var(--muted);font-size:13px}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.feature-card{padding:22px;background:var(--surface);border:1px solid var(--border);border-radius:14px;transition:.2s}
+.feature-card:hover{transform:translateY(-4px);border-color:var(--primary)}
+.feature-icon{font-size:24px;color:var(--primary2)}.feature-card h3{font-size:14px;margin:12px 0 5px}.feature-card p{font-size:11px;color:var(--muted)}
+.cta{text-align:center;padding:55px 20px 75px;background:linear-gradient(120deg,rgba(117,101,245,.13),rgba(53,194,209,.06));border:1px solid var(--border);border-radius:20px;margin-bottom:60px}
+.cta p{margin-bottom:20px}.landing-footer{border-top:1px solid var(--border);padding:25px 6%;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:10px}.landing-footer .brand{color:var(--text);font-size:14px}.landing-footer .brand-mark{font-size:18px}
+/* Auth */
+.auth-view{min-height:100vh;padding:25px;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 10%,rgba(117,101,245,.17),transparent 45%),var(--bg)}
+.back-link{position:absolute;top:25px;left:6%;background:none;border:0;color:var(--muted);font-size:12px}
+.auth-card{width:min(420px,100%);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:30px;box-shadow:var(--shadow)}
+.auth-brand{margin-bottom:28px}.auth-card h1{font-size:27px;margin:8px 0 4px}.auth-card form{display:grid;gap:15px;margin-top:25px}
+.auth-switch{text-align:center;font-size:12px;color:var(--muted);margin-top:20px}.auth-switch button{background:none;border:0;color:var(--primary2);font-weight:700}.auth-note{margin-top:15px;text-align:center}
+/* Application shell */
+.app-view{min-height:100vh}.sidebar{position:fixed;inset:0 auto 0 0;width:235px;background:var(--surface);border-right:1px solid var(--border);padding:23px 15px;display:flex;flex-direction:column;z-index:20}
+.side-brand{padding:0 10px 27px}.side-label{font-size:9px;font-weight:800;letter-spacing:1.5px;color:var(--muted);padding:13px 11px 8px}
+.side-nav{display:grid;gap:4px}.nav-item{width:100%;border:0;background:transparent;color:var(--muted);padding:11px 12px;text-align:left;border-radius:9px;display:flex;align-items:center;gap:12px;font-size:12px}
+.nav-item span{font-size:17px;width:19px;text-align:center}.nav-item:hover,.nav-item.active{background:rgba(117,101,245,.15);color:var(--text)}.nav-item.active{box-shadow:inset 2px 0 var(--primary)}
+.sidebar-bottom{margin-top:auto}.user-mini{display:flex;align-items:center;gap:9px;padding:14px 5px 0;border-top:1px solid var(--border);margin-top:12px}.user-mini-info{display:grid;min-width:0;flex:1}.user-mini-info b{font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.user-mini-info small{font-size:9px;color:var(--muted);overflow:hidden;text-overflow:ellipsis}
+.main-shell{margin-left:235px;min-height:100vh}.topbar{height:67px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;border-bottom:1px solid var(--border);background:rgba(11,16,32,.45);position:sticky;top:0;z-index:10;backdrop-filter:blur(15px)}
+.breadcrumb{display:flex;gap:10px;align-items:center;font-size:11px;color:var(--muted)}.breadcrumb strong{color:var(--text)}.topbar-actions{display:flex;align-items:center;gap:12px}.today-label{font-size:10px;color:var(--muted)}.mobile-menu,.mobile-nav{display:none}
+.page-content{padding:30px 32px 55px;max-width:1300px;margin:auto}.page-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:24px}.page-heading h1{font-size:25px;letter-spacing:-.7px}.page-heading p{font-size:12px;color:var(--muted);margin-top:4px}.heading-actions{display:flex;gap:8px;flex-wrap:wrap}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}.card-title{font-size:13px;font-weight:700;margin-bottom:14px}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:15px}.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:16px}.stat-card .stat-label{font-size:10px;color:var(--muted)}.stat-card strong{font-size:25px;display:block;margin-top:6px}.stat-icon{float:right;color:var(--primary2);font-size:19px}
+.dashboard-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:14px}.task-list{display:grid;gap:8px}.task-row{display:flex;align-items:center;gap:10px;padding:11px;background:var(--surface2);border-radius:9px}.task-row .task-main{flex:1;min-width:0}.task-row b{font-size:11px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.task-row small{font-size:9px;color:var(--muted)}.task-row.done b{text-decoration:line-through;color:var(--muted)}
+.check-btn{width:20px;height:20px;border:1px solid var(--muted);border-radius:6px;background:transparent;color:white;flex-shrink:0}.check-btn.checked{background:var(--primary);border-color:var(--primary)}
+.progress-track{height:8px;background:var(--surface3);border-radius:9px;overflow:hidden}.progress-track i{display:block;height:100%;background:linear-gradient(90deg,var(--primary),#43c7d9);border-radius:9px}
+.empty-state{text-align:center;color:var(--muted);font-size:12px;padding:28px 10px}.empty-state span{font-size:25px;display:block;margin-bottom:8px}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:15px}.toolbar input,.toolbar select{background:var(--surface);border:1px solid var(--border);border-radius:9px;color:var(--text);padding:10px 12px;font-size:11px;outline:none}
+.item-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.data-card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:15px;min-width:0}.data-card h3{font-size:13px;overflow-wrap:anywhere}.data-card p{font-size:11px;color:var(--muted);margin-top:7px;white-space:pre-wrap;overflow-wrap:anywhere}.data-card-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.data-card-actions{display:flex;gap:5px}.small-action{background:var(--surface2);border:1px solid var(--border);color:var(--muted);padding:5px 8px;border-radius:7px;font-size:10px}
+.pill{display:inline-flex;padding:4px 7px;border-radius:20px;font-size:9px;font-weight:700;background:var(--surface3);color:var(--muted)}.pill.high{background:rgba(255,116,135,.13);color:var(--danger)}.pill.medium{background:rgba(245,190,90,.13);color:#efc16f}.pill.low{background:rgba(105,220,185,.12);color:var(--mint)}
+.note-card{min-height:125px}.goal-progress{margin-top:14px}.goal-progress .progress-track{margin-top:7px}
+.calendar-list{display:grid;gap:9px}.calendar-event{padding:13px;border-left:3px solid var(--primary);background:var(--surface2);border-radius:8px}.calendar-event b{font-size:12px}.calendar-event small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.focus-wrap{max-width:520px;margin:15px auto;text-align:center}.timer-circle{width:230px;height:230px;border-radius:50%;border:8px solid var(--surface3);outline:2px solid rgba(117,101,245,.35);margin:25px auto;display:grid;place-items:center;box-shadow:0 0 55px rgba(117,101,245,.10)}.timer-time{font-size:48px;font-weight:800;letter-spacing:-2px}.timer-caption{font-size:10px;color:var(--muted)}.focus-controls{display:flex;justify-content:center;gap:9px}.focus-presets{display:flex;justify-content:center;gap:7px;margin:15px 0}.focus-presets button{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:7px 12px;border-radius:20px;font-size:10px}.focus-presets button.selected{background:rgba(117,101,245,.18);color:var(--text);border-color:var(--primary)}
+.bar-chart{height:155px;display:flex;align-items:flex-end;justify-content:space-around;gap:9px;padding:15px 5px 0;border-bottom:1px solid var(--border)}.bar-col{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:7px;flex:1}.bar{width:min(27px,70%);background:linear-gradient(180deg,var(--primary2),var(--primary));border-radius:6px 6px 2px 2px;min-height:3px}.bar-col small{font-size:9px;color:var(--muted)}
+.settings-list{display:grid;gap:10px}.setting-row{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:14px;background:var(--surface2);border-radius:10px}.setting-row b{font-size:12px}.setting-row small{display:block;color:var(--muted);font-size:10px}.danger-text{color:var(--danger)}
+.item-dialog{width:min(450px,calc(100% - 28px));margin:auto;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:17px;padding:20px;box-shadow:var(--shadow)}.item-dialog::backdrop{background:rgba(0,0,0,.65);backdrop-filter:blur(4px)}.dialog-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.dialog-head h3{font-size:16px}.dialog-head button{font-size:20px}.dialog-form{display:grid;gap:13px}
+@media(max-width:900px){.sidebar{width:205px}.main-shell{margin-left:205px}.stat-grid{grid-template-columns:repeat(2,1fr)}.dashboard-grid{grid-template-columns:1fr}}
+@media(max-width:680px){.landing-nav{height:62px;padding:0 5%}.landing-nav-actions{gap:2px}.landing-nav-actions .btn{padding:9px 10px;font-size:11px}.wrap{width:90%}.hero{grid-template-columns:1fr;padding:58px 0 50px;gap:35px}.hero h1{font-size:45px}.hero-lead{font-size:13px}.hero-actions{display:grid}.hero-preview{max-width:440px;width:100%;margin:auto}.feature-section{padding:45px 0 60px}.feature-grid{grid-template-columns:1fr 1fr;gap:9px}.feature-card{padding:15px}.feature-card h3{font-size:12px}.feature-card p{font-size:10px}.section-title h2,.cta h2{font-size:24px}.landing-footer{gap:10px;flex-direction:column;text-align:center}.auth-card{padding:24px}.sidebar{transform:translateX(-105%);transition:.25s;width:260px;box-shadow:var(--shadow)}.sidebar.open{transform:translateX(0)}.main-shell{margin-left:0}.topbar{height:59px;padding:0 15px}.mobile-menu{display:grid}.breadcrumb{margin-right:auto;margin-left:10px}.today-label{display:none}.top-avatar{display:none}.mobile-nav{position:fixed;display:flex;bottom:0;left:0;right:0;z-index:15;background:var(--surface);border-top:1px solid var(--border);padding:7px 5px max(7px,env(safe-area-inset-bottom));justify-content:space-around}.mobile-nav-item{border:0;background:transparent;color:var(--muted);display:grid;gap:2px;justify-items:center;min-width:48px;padding:3px 6px}.mobile-nav-item span{font-size:19px}.mobile-nav-item small{font-size:9px}.mobile-nav-item.active{color:var(--primary2)}.page-content{padding:22px 15px 100px}.page-heading{align-items:flex-start}.page-heading h1{font-size:22px}.page-heading p{font-size:10px}.heading-actions .btn{padding:9px 10px;font-size:10px}.stat-grid{gap:8px}.stat-card{padding:13px}.stat-card strong{font-size:22px}.dashboard-grid{gap:10px}.item-grid{grid-template-columns:1fr}.toolbar>*{flex:1;min-width:0}.toolbar input{min-width:100%}.timer-circle{width:205px;height:205px}.timer-time{font-size:43px}.back-link{top:18px;left:20px}}
+@media(max-width:360px){.hero h1{font-size:39px}.feature-grid{grid-template-columns:1fr}.stat-card strong{font-size:19px}}
+
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+// DAYORA CONFIGURATION
+// Untuk mode online, isi URL dan anon/publishable key dari project Supabase.
+// Jangan pernah memasukkan service_role key ke frontend.
+window.DAYORA_CONFIG = {
+  SUPABASE_URL: "",
+  SUPABASE_ANON_KEY: ""
+};
+
+  </script>
+  <script defer>
+(() => {
+  "use strict";
+
+  const $ = (s, root=document) => root.querySelector(s);
+  const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+  const state = {
+    page: "dashboard",
+    authMode: "login",
+    user: null,
+    supabase: null,
+    localMode: true,
+    data: { tasks: [], notes: [], goals: [], events: [], focus_sessions: [] },
+    timer: { seconds: 25*60, remaining: 25*60, running: false, interval: null, preset: 25 }
+  };
+  const labels = {dashboard:"Dashboard",tasks:"My Tasks",calendar:"Calendar",notes:"My Notes",goals:"Goals",focus:"Focus Room",analytics:"Analytics",settings:"Settings"};
+  const todayISO = () => new Date().toISOString().slice(0,10);
+  const dateText = value => value ? new Date(value+"T00:00:00").toLocaleDateString("id-ID",{day:"numeric",month:"short",year:"numeric"}) : "Tanpa tanggal";
+  const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const uid = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()+Math.random()));
+  let toastTimer;
+
+  function toast(message) {
+    const el=$("#toast"); el.textContent=message; el.classList.add("show");
+    clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove("show"),2600);
+  }
+  function configured() {
+    const c=window.DAYORA_CONFIG || {};
+    return Boolean(c.SUPABASE_URL && c.SUPABASE_ANON_KEY && window.supabase);
+  }
+  function localKey(){ return "dayora_data_"+(state.user?.id || "guest"); }
+  function loadLocal() {
+    try {
+      const saved=JSON.parse(localStorage.getItem(localKey()) || "{}");
+      state.data={tasks:[],notes:[],goals:[],events:[],focus_sessions:[],...saved};
+    } catch { state.data={tasks:[],notes:[],goals:[],events:[],focus_sessions:[]}; }
+  }
+  function saveLocal(){ localStorage.setItem(localKey(),JSON.stringify(state.data)); }
+  async function initBackend() {
+    if(!configured()) return;
+    const c=window.DAYORA_CONFIG;
+    state.supabase=window.supabase.createClient(c.SUPABASE_URL,c.SUPABASE_ANON_KEY);
+    state.localMode=false;
+    const {data:{session}}=await state.supabase.auth.getSession();
+    if(session?.user) await setUser(session.user);
+    state.supabase.auth.onAuthStateChange((_event,session)=>{
+      if(session?.user){ setUser(session.user); }
+      else if(state.user){ state.user=null; showLanding(); }
+    });
+  }
+  async function setUser(user) {
+    state.user=user;
+    if(state.localMode) loadLocal();
+    else await loadRemoteData();
+    showApp();
+  }
+  async function loadRemoteData() {
+    const tables=["tasks","notes","goals","events","focus_sessions"];
+    for(const table of tables) {
+      const {data,error}=await state.supabase.from(table).select("*").order("created_at",{ascending:false});
+      if(error){ console.error(error); toast("Gagal memuat "+table+". Periksa tabel dan RLS."); }
+      else state.data[table]=data || [];
+    }
+  }
+  async function persist(table, record, id) {
+    if(state.localMode) {
+      const arr=state.data[table];
+      if(id){ const index=arr.findIndex(x=>x.id===id); if(index>=0) arr[index]={...arr[index],...record}; }
+      else arr.unshift({id:uid(),created_at:new Date().toISOString(),...record});
+      saveLocal(); return true;
+    }
+    const query=id ? state.supabase.from(table).update(record).eq("id",id) : state.supabase.from(table).insert({...record,user_id:state.user.id});
+    const {error}=await query;
+    if(error){toast(error.message);return false;}
+    await loadRemoteData(); return true;
+  }
+  async function removeRecord(table,id) {
+    if(state.localMode){state.data[table]=state.data[table].filter(x=>x.id!==id);saveLocal();return true;}
+    const {error}=await state.supabase.from(table).delete().eq("id",id);
+    if(error){toast(error.message);return false;}
+    await loadRemoteData();return true;
+  }
+  function showLanding(){ $("#landingView").classList.remove("hidden");$("#authView").classList.add("hidden");$("#appView").classList.add("hidden"); }
+  function showAuth(mode){
+    state.authMode=mode;$("#landingView").classList.add("hidden");$("#appView").classList.add("hidden");$("#authView").classList.remove("hidden");
+    const register=mode==="register";
+    $("#authTitle").textContent=register?"Buat akun DAYORA":"Selamat datang kembali";
+    $("#authSubtitle").textContent=register?"Mulai atur aktivitasmu secara lebih terstruktur.":"Masuk untuk membuka workspace-mu.";
+    $("#nameField").classList.toggle("hidden",!register);
+    $("#authName").required=register;
+    $("#authPassword").autocomplete=register?"new-password":"current-password";
+    $("#authSubmit").textContent=register?"Buat akun gratis":"Masuk";
+    $("#authSwitch").innerHTML=register?'Sudah punya akun? <button type="button" data-open-auth="login">Masuk</button>':'Belum punya akun? <button type="button" data-open-auth="register">Daftar gratis</button>';
+    $("#authModeNote").textContent=state.localMode?"Mode demo lokal: data tersimpan di browser ini.":"Akun online: data tersimpan di Supabase.";
+  }
+  async function handleAuth(e){
+    e.preventDefault();
+    const email=$("#authEmail").value.trim(),password=$("#authPassword").value;
+    const name=$("#authName").value.trim();
+    if(state.localMode){
+      const users=JSON.parse(localStorage.getItem("dayora_local_users")||"{}");
+      if(state.authMode==="register"){
+        if(users[email]) return toast("Email ini sudah terdaftar di browser ini.");
+        users[email]={password,name};localStorage.setItem("dayora_local_users",JSON.stringify(users));
+        state.user={id:"local_"+email,email,user_metadata:{full_name:name}};
+      } else {
+        if(!users[email] || users[email].password!==password) return toast("Email atau password demo tidak cocok.");
+        state.user={id:"local_"+email,email,user_metadata:{full_name:users[email].name}};
+      }
+      loadLocal();showApp();toast("Berhasil masuk ke DAYORA.");return;
+    }
+    $("#authSubmit").disabled=true;
+    try {
+      if(state.authMode==="register"){
+        const {data,error}=await state.supabase.auth.signUp({email,password,options:{data:{full_name:name}}});
+        if(error) throw error;
+        if(data.session){await setUser(data.user);toast("Akun berhasil dibuat.");}
+        else toast("Akun dibuat. Periksa email untuk konfirmasi, lalu masuk.");
+      } else {
+        const {data,error}=await state.supabase.auth.signInWithPassword({email,password});
+        if(error) throw error;
+        await setUser(data.user);toast("Berhasil masuk.");
+      }
+    } catch(err){toast(err.message || "Autentikasi gagal.");}
+    finally{$("#authSubmit").disabled=false;}
+  }
+  async function logout(){
+    if(!state.localMode) await state.supabase.auth.signOut();
+    state.user=null;state.data={tasks:[],notes:[],goals:[],events:[],focus_sessions:[]};showLanding();toast("Kamu sudah keluar.");
+  }
+  function showApp(){
+    $("#landingView").classList.add("hidden");$("#authView").classList.add("hidden");$("#appView").classList.remove("hidden");
+    const name=state.user?.user_metadata?.full_name || state.user?.email?.split("@")[0] || "Pengguna";
+    $("#sideName").textContent=name;$("#sideEmail").textContent=state.user?.email || "Mode demo";
+    $("#sideAvatar").textContent=name[0].toUpperCase();$("#topAvatar").textContent=name[0].toUpperCase();
+    $("#todayLabel").textContent=new Date().toLocaleDateString("id-ID",{weekday:"short",day:"numeric",month:"short"});
+    renderPage(state.page);
+  }
+  function setPage(page){
+    if(!labels[page]) return;
+    state.page=page;$("#sidebar").classList.remove("open");
+    $$(".nav-item,[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+    renderPage(page);
+  }
+  function heading(title,desc,button=""){
+    return `<div class="page-heading"><div><h1>${title}</h1><p>${desc}</p></div>${button?`<div class="heading-actions">${button}</div>`:""}</div>`;
+  }
+  function addButton(type,label="Tambah baru"){return `<button class="btn btn-primary" data-add="${type}">＋ ${label}</button>`;}
+  function empty(text){return `<div class="empty-state"><span>◌</span>${text}</div>`;}
+  function taskRows(tasks){
+    if(!tasks.length)return empty("Belum ada tugas. Tambahkan tugas pertamamu.");
+    return `<div class="task-list">${tasks.map(t=>`<div class="task-row ${t.status==="completed"?"done":""}">
+      <button class="check-btn ${t.status==="completed"?"checked":""}" data-toggle-task="${t.id}" aria-label="Ubah status">${t.status==="completed"?"✓":""}</button>
+      <div class="task-main"><b>${escapeHTML(t.title)}</b><small>${t.due_date?dateText(t.due_date):"Tanpa tenggat"} · <span class="pill ${t.priority||"medium"}">${t.priority||"medium"}</span></small></div>
+      <button class="small-action" data-edit="tasks" data-id="${t.id}">Edit</button>
+    </div>`).join("")}</div>`;
+  }
+  function renderDashboard(){
+    const tasks=state.data.tasks,done=tasks.filter(t=>t.status==="completed").length,pct=tasks.length?Math.round(done/tasks.length*100):0;
+    const upcoming=[...tasks].filter(t=>t.status!=="completed").sort((a,b)=>(a.due_date||"9999").localeCompare(b.due_date||"9999")).slice(0,5);
+    const notes=state.data.notes.slice(0,3);
+    return `${heading("Dashboard","Ringkasan aktivitas dan fokusmu hari ini.",addButton("tasks","Tambah tugas"))}
+      <div class="stat-grid">
+        <div class="stat-card"><span class="stat-icon">✓</span><span class="stat-label">Total tugas</span><strong>${tasks.length}</strong></div>
+        <div class="stat-card"><span class="stat-icon">◉</span><span class="stat-label">Selesai</span><strong>${done}</strong></div>
+        <div class="stat-card"><span class="stat-icon">◎</span><span class="stat-label">Target</span><strong>${state.data.goals.length}</strong></div>
+        <div class="stat-card"><span class="stat-icon">✎</span><span class="stat-label">Catatan</span><strong>${state.data.notes.length}</strong></div>
+      </div>
+      <div class="dashboard-grid">
+        <section class="card"><div class="card-title">Tugas mendatang</div>${taskRows(upcoming)}</section>
+        <section class="card"><div class="card-title">Progres penyelesaian</div><h2 style="font-size:32px;margin:5px 0">${pct}%</h2><p class="muted tiny">${done} dari ${tasks.length} tugas selesai</p><div class="progress-track" style="margin:14px 0 22px"><i style="width:${pct}%"></i></div><div class="card-title">Catatan terbaru</div>${notes.length?notes.map(n=>`<p class="tiny muted" style="padding:7px 0;border-bottom:1px solid var(--border)">✎ ${escapeHTML(n.title)}</p>`).join(""):empty("Belum ada catatan.")}</section>
+      </div>`;
+  }
+  function renderTasks(){
+    const tasks=state.data.tasks;
+    return `${heading("My Tasks","Atur prioritas dan pantau semua pekerjaanmu.",addButton("tasks","Tambah tugas"))}
+      <div class="toolbar"><input id="taskSearch" type="search" placeholder="Cari tugas..."><select id="taskFilter"><option value="all">Semua status</option><option value="pending">Belum dimulai</option><option value="in_progress">Dikerjakan</option><option value="completed">Selesai</option></select></div>
+      <div id="taskResults">${taskRows(tasks)}</div>`;
+  }
+  function renderNotes(){
+    return `${heading("My Notes","Simpan ide dan informasi pentingmu.",addButton("notes","Buat catatan"))}
+      <div class="toolbar"><input id="noteSearch" type="search" placeholder="Cari catatan..."></div>
+      <div class="item-grid" id="noteResults">${state.data.notes.length?state.data.notes.map(n=>noteCard(n)).join(""):empty("Belum ada catatan. Buat catatan pertamamu.")}</div>`;
+  }
+  function noteCard(n){return `<article class="data-card note-card"><div class="data-card-top"><h3>${escapeHTML(n.title)}</h3><div class="data-card-actions"><button class="small-action" data-edit="notes" data-id="${n.id}">Edit</button><button class="small-action" data-delete="notes" data-id="${n.id}">Hapus</button></div></div><p>${escapeHTML(n.content||"Catatan kosong")}</p></article>`;}
+  function renderGoals(){
+    return `${heading("Goals","Ubah tujuan menjadi langkah yang terukur.",addButton("goals","Tambah target"))}
+      <div class="item-grid">${state.data.goals.length?state.data.goals.map(g=>`<article class="data-card"><div class="data-card-top"><h3>${escapeHTML(g.title)}</h3><div class="data-card-actions"><button class="small-action" data-edit="goals" data-id="${g.id}">Edit</button><button class="small-action" data-delete="goals" data-id="${g.id}">Hapus</button></div></div><p>Target: ${dateText(g.target_date)}</p><div class="goal-progress"><div class="progress-head"><span class="muted tiny">Progres</span><b class="tiny">${g.progress||0}%</b></div><div class="progress-track"><i style="width:${g.progress||0}%"></i></div></div></article>`).join(""):empty("Belum ada target. Tambahkan tujuan pertamamu.")}</div>`;
+  }
+  function renderCalendar(){
+    const events=[...state.data.events].sort((a,b)=>(a.start_time||"").localeCompare(b.start_time||""));
+    return `${heading("Calendar","Lihat dan atur agenda yang akan datang.",addButton("events","Tambah agenda"))}
+      <div class="card"><div class="card-title">Agenda tersimpan</div>${events.length?`<div class="calendar-list">${events.map(e=>`<div class="calendar-event"><div class="data-card-top"><b>${escapeHTML(e.title)}</b><button class="small-action" data-delete="events" data-id="${e.id}">Hapus</button></div><small>${new Date(e.start_time).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"})}</small>${e.description?`<p class="tiny muted">${escapeHTML(e.description)}</p>`:""}</div>`).join("")}</div>`:empty("Belum ada agenda. Tambahkan jadwal pertamamu.")}</div>`;
+  }
+  function renderFocus(){
+    const t=state.timer,mins=String(Math.floor(t.remaining/60)).padStart(2,"0"),secs=String(t.remaining%60).padStart(2,"0");
+    return `${heading("Focus Room","Ambil waktu untuk fokus pada satu hal penting.","")}
+      <div class="card focus-wrap"><span class="eyebrow">FOCUS SESSION</span><div class="timer-circle"><div><div class="timer-time" id="timerDisplay">${mins}:${secs}</div><div class="timer-caption" id="timerCaption">${t.running?"SEDANG BERJALAN":"SIAP UNTUK FOKUS"}</div></div></div>
+      <div class="focus-presets">${[15,25,45,60].map(n=>`<button class="${t.preset===n?"selected":""}" data-preset="${n}">${n} menit</button>`).join("")}</div>
+      <div class="focus-controls"><button class="btn btn-primary" id="timerStart">${t.running?"Jeda":"Mulai fokus"}</button><button class="btn btn-outline" id="timerReset">Reset</button></div>
+      <p class="muted tiny" style="margin-top:20px">Sesi yang selesai akan masuk ke riwayat fokus.</p></div>
+      <div class="card"><div class="card-title">Sesi terbaru</div>${state.data.focus_sessions.length?state.data.focus_sessions.slice(0,5).map(s=>`<p class="tiny muted" style="padding:7px 0">${Math.round(s.duration/60)} menit · ${new Date(s.completed_at).toLocaleString("id-ID")}</p>`).join(""):empty("Belum ada sesi fokus.")}</div>`;
+  }
+  function renderAnalytics(){
+    const tasks=state.data.tasks,done=tasks.filter(t=>t.status==="completed").length;
+    const last7=Array.from({length:7},(_,i)=>{const d=new Date();d.setDate(d.getDate()-(6-i));const key=d.toISOString().slice(0,10);return {label:d.toLocaleDateString("id-ID",{weekday:"short"}),count:tasks.filter(t=>t.status==="completed"&&(t.updated_at||t.created_at||"").slice(0,10)===key).length};});
+    const max=Math.max(1,...last7.map(x=>x.count));
+    return `${heading("Analytics","Ringkasan sederhana dari aktivitasmu.","")}
+      <div class="stat-grid"><div class="stat-card"><span class="stat-label">Total tugas</span><strong>${tasks.length}</strong></div><div class="stat-card"><span class="stat-label">Tugas selesai</span><strong>${done}</strong></div><div class="stat-card"><span class="stat-label">Target</span><strong>${state.data.goals.length}</strong></div><div class="stat-card"><span class="stat-label">Sesi fokus</span><strong>${state.data.focus_sessions.length}</strong></div></div>
+      <div class="card"><div class="card-title">Tugas selesai · 7 hari terakhir</div><div class="bar-chart">${last7.map(x=>`<div class="bar-col"><div class="bar" style="height:${Math.max(3,x.count/max*100)}%"></div><small>${x.label}</small></div>`).join("")}</div><p class="muted tiny" style="margin-top:14px">Grafik dihitung dari tanggal pembaruan tugas yang tersedia.</p></div>`;
+  }
+  function renderSettings(){
+    const name=state.user?.user_metadata?.full_name||state.user?.email?.split("@")[0]||"Pengguna";
+    return `${heading("Settings","Kelola preferensi workspace dan akunmu.","")}
+      <div class="card settings-list">
+        <div class="setting-row"><div><b>Profil pengguna</b><small>${escapeHTML(state.user?.email||"Mode lokal")}</small></div><span class="pill">Aktif</span></div>
+        <div class="setting-row"><div><b>Tampilan</b><small>Ubah tema gelap atau terang</small></div><button class="btn btn-outline" id="settingsTheme">Ganti tema</button></div>
+        <div class="setting-row"><div><b>Mode penyimpanan</b><small>${state.localMode?"Lokal di browser ini":"Database Supabase online"}</small></div><span class="pill">${state.localMode?"Demo":"Online"}</span></div>
+        <div class="setting-row"><div><b>Ekspor data</b><small>Unduh salinan data DAYORA dalam format JSON</small></div><button class="btn btn-outline" id="exportData">Ekspor</button></div>
+        <div class="setting-row"><div><b>Keluar akun</b><small>Akhiri sesi pada perangkat ini</small></div><button class="btn btn-outline danger-text" id="settingsLogout">Logout</button></div>
+      </div>
+      <p class="muted tiny" style="margin-top:14px">Halo, ${escapeHTML(name)}. DAYORA menyimpan data demo di browser atau di database online jika Supabase sudah dikonfigurasi.</p>`;
+  }
+  function renderPage(page){
+    $("#pageCrumb").textContent=labels[page];
+    const renderers={dashboard:renderDashboard,tasks:renderTasks,calendar:renderCalendar,notes:renderNotes,goals:renderGoals,focus:renderFocus,analytics:renderAnalytics,settings:renderSettings};
+    $("#pageContent").innerHTML=renderers[page]();
+  }
+  function openItem(type,id=null){
+    const existing=id?state.data[type].find(x=>x.id===id):null;
+    $("#itemForm").reset();$("#itemId").value=id||"";$("#itemType").value=type;
+    const titleMap={tasks:"Tugas",notes:"Catatan",goals:"Target",events:"Agenda"};
+    $("#dialogTitle").textContent=(existing?"Edit ":"Tambah ")+titleMap[type];
+    $("#itemTitle").value=existing?.title||"";
+    $("#itemDescription").value=existing?.description||existing?.content||"";
+    $("#descriptionWrap").classList.toggle("hidden",type==="goals");
+    $("#priorityWrap").classList.toggle("hidden",type!=="tasks");
+    $("#dateWrap").classList.toggle("hidden",type==="notes");
+    $("#goalProgressWrap").classList.toggle("hidden",type!=="goals");
+    $("#itemPriority").value=existing?.priority||"medium";
+    $("#itemDate").value=existing?.due_date||existing?.target_date||(existing?.start_time?existing.start_time.slice(0,10):"");
+    $("#goalProgress").value=existing?.progress||0;
+    $("#itemDialog").showModal();
+  }
+  async function submitItem(e){
+    e.preventDefault();
+    const type=$("#itemType").value,id=$("#itemId").value,title=$("#itemTitle").value.trim();
+    const desc=$("#itemDescription").value.trim(),date=$("#itemDate").value;
+    let record={title};
+    if(type==="tasks")record={...record,description:desc,priority:$("#itemPriority").value,due_date:date||null,status:"pending"};
+    if(type==="notes")record={...record,content:desc,updated_at:new Date().toISOString()};
+    if(type==="goals")record={...record,target_date:date||null,progress:Math.min(100,Math.max(0,Number($("#goalProgress").value)||0))};
+    if(type==="events")record={...record,description:desc,start_time:date?new Date(date+"T09:00:00").toISOString():new Date().toISOString()};
+    const ok=await persist(type,record,id||null);
+    if(ok){$("#itemDialog").close();renderPage(state.page);toast("Berhasil disimpan.");}
+  }
+  async function handleClick(e){
+    const auth=e.target.closest("[data-open-auth]");if(auth){showAuth(auth.dataset.openAuth);return;}
+    const scroll=e.target.closest("[data-scroll]");if(scroll){document.querySelector(scroll.dataset.scroll)?.scrollIntoView({behavior:"smooth"});return;}
+    const page=e.target.closest("[data-page]");if(page){setPage(page.dataset.page);return;}
+    const add=e.target.closest("[data-add]");if(add){openItem(add.dataset.add);return;}
+    const edit=e.target.closest("[data-edit]");if(edit){openItem(edit.dataset.edit,edit.dataset.id);return;}
+    const del=e.target.closest("[data-delete]");if(del){if(confirm("Hapus item ini?")){await removeRecord(del.dataset.delete,del.dataset.id);renderPage(state.page);toast("Item dihapus.");}return;}
+    const toggle=e.target.closest("[data-toggle-task]");if(toggle){const task=state.data.tasks.find(t=>t.id===toggle.dataset.toggleTask);if(task){const next=task.status==="completed"?"pending":"completed";await persist("tasks",{status:next,updated_at:new Date().toISOString()},task.id);renderPage(state.page);}return;}
+    const preset=e.target.closest("[data-preset]");if(preset){stopTimer();state.timer.preset=Number(preset.dataset.preset);state.timer.seconds=state.timer.preset*60;state.timer.remaining=state.timer.seconds;renderPage("focus");return;}
+  }
+  function stopTimer(){if(state.timer.interval)clearInterval(state.timer.interval);state.timer.interval=null;state.timer.running=false;}
+  function updateTimer(){const el=$("#timerDisplay");if(el){el.textContent=String(Math.floor(state.timer.remaining/60)).padStart(2,"0")+":"+String(state.timer.remaining%60).padStart(2,"0");$("#timerCaption").textContent=state.timer.running?"SEDANG BERJALAN":"SIAP UNTUK FOKUS";}}
+  async function finishTimer(){stopTimer();const duration=state.timer.seconds;state.timer.remaining=state.timer.seconds;await persist("focus_sessions",{duration,completed_at:new Date().toISOString()});toast("Sesi fokus selesai. Bagus!");renderPage("focus");}
+  function bindPageActions(e){
+    if(e.target.id==="timerStart"){
+      if(state.timer.running){stopTimer();updateTimer();e.target.textContent="Lanjutkan";}
+      else{state.timer.running=true;e.target.textContent="Jeda";state.timer.interval=setInterval(()=>{state.timer.remaining--;updateTimer();if(state.timer.remaining<=0)finishTimer();},1000);updateTimer();}
+    }
+    if(e.target.id==="timerReset"){stopTimer();state.timer.remaining=state.timer.seconds;renderPage("focus");}
+    if(e.target.id==="settingsTheme")toggleTheme();
+    if(e.target.id==="settingsLogout")logout();
+    if(e.target.id==="exportData")exportData();
+  }
+  function toggleTheme(){document.body.classList.toggle("light");localStorage.setItem("dayora_theme",document.body.classList.contains("light")?"light":"dark");}
+  function exportData(){const blob=new Blob([JSON.stringify(state.data,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="dayora-data.json";a.click();URL.revokeObjectURL(url);toast("Data berhasil diekspor.");}
+  function filterTasks(){
+    const q=($("#taskSearch")?.value||"").toLowerCase(),f=$("#taskFilter")?.value||"all";
+    const rows=state.data.tasks.filter(t=>t.title.toLowerCase().includes(q)&&(f==="all"||t.status===f));
+    $("#taskResults").innerHTML=taskRows(rows);
+  }
+  function filterNotes(){
+    const q=($("#noteSearch")?.value||"").toLowerCase();
+    const rows=state.data.notes.filter(n=>(n.title+" "+(n.content||"")).toLowerCase().includes(q));
+    $("#noteResults").innerHTML=rows.length?rows.map(noteCard).join(""):empty("Catatan tidak ditemukan.");
+  }
+  document.addEventListener("click",e=>{handleClick(e);bindPageActions(e);});
+  document.addEventListener("submit",e=>{if(e.target.id==="authForm")handleAuth(e);if(e.target.id==="itemForm")submitItem(e);});
+  document.addEventListener("input",e=>{if(e.target.id==="taskSearch"||e.target.id==="taskFilter")filterTasks();if(e.target.id==="noteSearch")filterNotes();});
+  $("#backLanding").addEventListener("click",showLanding);
+  $("#logoutBtn").addEventListener("click",logout);
+  $("#themeToggle").addEventListener("click",toggleTheme);
+  $("#mobileMenu").addEventListener("click",()=>$("#sidebar").classList.toggle("open"));
+  const savedTheme=localStorage.getItem("dayora_theme");if(savedTheme==="light")document.body.classList.add("light");
+  initBackend().then(()=>{if(!state.user)showLanding();}).catch(err=>{console.error(err);showLanding();});
+})();
+
+  </script>
+</head>
+<body>
+  <div id="toast" class="toast" role="status"></div>
+
+  <section id="landingView" class="landing-view">
+    <header class="landing-nav">
+      <a class="brand" href="#"><span class="brand-mark">◈</span> DAYORA</a>
+      <div class="landing-nav-actions">
+        <button class="btn btn-ghost" data-open-auth="login">Masuk</button>
+        <button class="btn btn-primary" data-open-auth="register">Mulai Gratis</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero wrap">
+        <div class="hero-copy">
+          <span class="eyebrow"><span class="pulse"></span> YOUR PRODUCTIVITY SPACE</span>
+          <h1>Atur harimu.<br><span>Capai tujuanmu.</span></h1>
+          <p class="hero-lead">Semua yang kamu butuhkan untuk mengelola tugas, jadwal, catatan, dan target dalam satu ruang kerja yang sederhana.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-large" data-open-auth="register">Buat akun gratis <span>→</span></button>
+            <button class="btn btn-outline btn-large" data-scroll="#features">Jelajahi fitur</button>
+          </div>
+          <div class="hero-caption">Gratis digunakan · Fokus di HP · Sinkronisasi dengan akun</div>
+        </div>
+        <div class="hero-preview">
+          <div class="preview-top"><span class="brand"><span class="brand-mark">◈</span> DAYORA</span><span class="live-dot">● Workspace</span></div>
+          <div class="preview-content">
+            <span class="muted tiny">RINGKASAN HARI INI</span>
+            <h2>Selamat datang kembali.</h2>
+            <div class="preview-stats">
+              <div><span class="muted tiny">Total tugas</span><strong>12</strong></div>
+              <div><span class="muted tiny">Selesai</span><strong class="mint">08</strong></div>
+            </div>
+            <div class="progress-head"><span>Progres harian</span><b>67%</b></div>
+            <div class="progress"><i style="width:67%"></i></div>
+            <div class="preview-task"><span class="task-check">✓</span> Selesaikan tugas prioritas</div>
+            <div class="preview-task"><span class="task-empty"></span> Periksa jadwal mingguan</div>
+            <div class="preview-task"><span class="task-empty"></span> Catat ide proyek baru</div>
+          </div>
+          <div class="preview-glow"></div>
+        </div>
+      </section>
+
+      <section id="features" class="feature-section wrap">
+        <div class="section-title">
+          <span class="eyebrow">TOOLS FOR YOUR DAY</span>
+          <h2>Satu tempat untuk semuanya.</h2>
+          <p>Kelola aktivitas tanpa harus berpindah-pindah aplikasi.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card"><span class="feature-icon">✓</span><h3>My Tasks</h3><p>Atur tugas, prioritas, status, dan tenggat waktu.</p></article>
+          <article class="feature-card"><span class="feature-icon">▦</span><h3>Calendar</h3><p>Susun agenda dan lihat aktivitas berdasarkan tanggal.</p></article>
+          <article class="feature-card"><span class="feature-icon">✎</span><h3>My Notes</h3><p>Simpan catatan, ide, dan informasi penting.</p></article>
+          <article class="feature-card"><span class="feature-icon">◎</span><h3>Goals</h3><p>Pantau target dan perkembangan langkah demi langkah.</p></article>
+          <article class="feature-card"><span class="feature-icon">◷</span><h3>Focus Room</h3><p>Gunakan timer fokus dan simpan sesi produktivitas.</p></article>
+          <article class="feature-card"><span class="feature-icon">↗</span><h3>Analytics</h3><p>Lihat ringkasan tugas dan waktu fokusmu.</p></article>
+        </div>
+      </section>
+      <section class="cta wrap">
+        <span class="eyebrow">MAKE EVERY DAY COUNT</span>
+        <h2>Mulai dari satu langkah kecil.</h2>
+        <p>Buat ruang kerjamu sendiri bersama DAYORA.</p>
+        <button class="btn btn-primary btn-large" data-open-auth="register">Mulai sekarang →</button>
+      </section>
+    </main>
+    <footer class="landing-footer"><span class="brand"><span class="brand-mark">◈</span> DAYORA</span><span>© 2026 DAYORA · Make Every Day Count.</span></footer>
+  </section>
+
+  <section id="authView" class="auth-view hidden">
+    <button class="back-link" id="backLanding">← Kembali ke beranda</button>
+    <div class="auth-card">
+      <a class="brand auth-brand" href="#"><span class="brand-mark">◈</span> DAYORA</a>
+      <div id="authHeading">
+        <span class="eyebrow">YOUR PRODUCTIVITY SPACE</span>
+        <h1 id="authTitle">Selamat datang</h1>
+        <p id="authSubtitle" class="muted">Masuk untuk membuka workspace-mu.</p>
+      </div>
+      <form id="authForm">
+        <label id="nameField" class="field hidden">Nama lengkap<input id="authName" type="text" autocomplete="name" placeholder="Nama kamu"></label>
+        <label class="field">Email<input id="authEmail" type="email" required autocomplete="email" placeholder="nama@email.com"></label>
+        <label class="field">Password<input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="Minimal 6 karakter"></label>
+        <button id="authSubmit" class="btn btn-primary btn-full" type="submit">Masuk</button>
+      </form>
+      <p class="auth-switch" id="authSwitch">Belum punya akun? <button data-open-auth="register">Daftar gratis</button></p>
+      <p class="tiny muted auth-note" id="authModeNote"></p>
+    </div>
+  </section>
+
+  <section id="appView" class="app-view hidden">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand side-brand" href="#"><span class="brand-mark">◈</span> DAYORA</a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="side-nav">
+        <button class="nav-item active" data-page="dashboard"><span>⌂</span> Dashboard</button>
+        <button class="nav-item" data-page="tasks"><span>✓</span> My Tasks</button>
+        <button class="nav-item" data-page="calendar"><span>▦</span> Calendar</button>
+        <button class="nav-item" data-page="notes"><span>✎</span> My Notes</button>
+        <button class="nav-item" data-page="goals"><span>◎</span> Goals</button>
+      </nav>
+      <div class="side-label">PRODUCTIVITY</div>
+      <nav class="side-nav">
+        <button class="nav-item" data-page="focus"><span>◷</span> Focus Room</button>
+        <button class="nav-item" data-page="analytics"><span>↗</span> Analytics</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="nav-item" data-page="settings"><span>⚙</span> Settings</button>
+        <div class="user-mini"><div class="avatar" id="sideAvatar">U</div><div class="user-mini-info"><b id="sideName">Pengguna</b><small id="sideEmail">Akun DAYORA</small></div><button id="logoutBtn" class="icon-btn" title="Keluar">↪</button></div>
+      </div>
+    </aside>
+
+    <div class="main-shell">
+      <header class="topbar">
+        <button id="mobileMenu" class="icon-btn mobile-menu" aria-label="Buka menu">☰</button>
+        <div class="breadcrumb"><span>Workspace</span><b>/</b><strong id="pageCrumb">Dashboard</strong></div>
+        <div class="topbar-actions"><span class="today-label" id="todayLabel"></span><button class="icon-btn" id="themeToggle" title="Ganti tema">☼</button><div class="avatar top-avatar" id="topAvatar">U</div></div>
+      </header>
+      <main id="pageContent" class="page-content"></main>
+      <nav class="mobile-nav">
+        <button class="mobile-nav-item active" data-page="dashboard"><span>⌂</span><small>Home</small></button>
+        <button class="mobile-nav-item" data-page="tasks"><span>✓</span><small>Tasks</small></button>
+        <button class="mobile-nav-item" data-page="calendar"><span>▦</span><small>Calendar</small></button>
+        <button class="mobile-nav-item" data-page="notes"><span>✎</span><small>Notes</small></button>
+        <button class="mobile-nav-item" data-page="settings"><span>⚙</span><small>More</small></button>
+      </nav>
+    </div>
+  </section>
+
+  <dialog id="itemDialog" class="item-dialog">
+    <form method="dialog" class="dialog-head"><h3 id="dialogTitle">Tambah item</h3><button class="icon-btn" value="cancel" aria-label="Tutup">×</button></form>
+    <form id="itemForm" class="dialog-form">
+      <input type="hidden" id="itemId">
+      <input type="hidden" id="itemType">
+      <label class="field">Judul<input id="itemTitle" required maxlength="120" placeholder="Tulis judul..."></label>
+      <label class="field" id="descriptionWrap">Deskripsi<textarea id="itemDescription" rows="3" placeholder="Tambahkan detail (opsional)"></textarea></label>
+      <label class="field" id="priorityWrap">Prioritas<select id="itemPriority"><option value="low">Rendah</option><option value="medium" selected>Sedang</option><option value="high">Tinggi</option></select></label>
+      <label class="field" id="dateWrap">Tanggal<input id="itemDate" type="date"></label>
+      <label class="field hidden" id="goalProgressWrap">Progres (%)<input id="goalProgress" type="number" min="0" max="100" value="0"></label>
+      <button class="btn btn-primary btn-full" type="submit">Simpan</button>
+    </form>
+  </dialog>
+</body>
+</html>
